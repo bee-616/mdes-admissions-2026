@@ -809,10 +809,11 @@
       cursor: pointer;
       transition: opacity 0.15s;
       font-weight: 500;
+      opacity: 1;
     }
 
     .btn-submit:hover { opacity: 0.85; }
-    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .btn-cancel {
       font-family: var(--mono);
@@ -1196,10 +1197,10 @@ function toggleTheme() {
 // ── MODAL ─────────────────────────────────────────────────────
 // ⚙ CONFIG: Replace with your Google Form action URL and entry IDs
 // Form action URL looks like: https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse
-const FORM_ACTION = 'YOUR_GOOGLE_FORM_ACTION_URL';
-const FIELD_ISSUE    = 'entry.XXXXXXXXX'; // Issue type field
-const FIELD_INSTITUTE= 'entry.XXXXXXXXX'; // Institute field
-const FIELD_DETAILS  = 'entry.XXXXXXXXX'; // Details field
+const FORM_ACTION  = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSf0GHCU5P5304hxrl3weG43AzV6e9u-rGEDI80e5Ix1SgCT_w/formResponse';
+const FIELD_ISSUE     = 'entry.1120530548';
+const FIELD_INSTITUTE = 'entry.637008742';
+const FIELD_DETAILS   = 'entry.1058527200';
 
 function openModal() {
   // Populate institute dropdown from loaded data
@@ -1217,6 +1218,11 @@ function openModal() {
   document.getElementById('report-details').value = '';
   document.getElementById('modal-form-content').classList.remove('hidden');
   document.getElementById('modal-success-content').classList.add('hidden');
+
+  // Always reset submit button
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = false;
+  btn.textContent = 'Submit →';
 
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1281,17 +1287,17 @@ async function submitReport() {
     document.body.appendChild(form);
     form.submit();
 
-    // Clean up after a moment
+    // Google Forms blocks iframe response via CORS — data is submitted
+    // but we can't confirm it. Show success after short delay.
     setTimeout(() => {
       document.body.removeChild(form);
       document.body.removeChild(iframe);
-    }, 3000);
-
-    // Show success
-    document.getElementById('modal-form-content').classList.add('hidden');
-    document.getElementById('modal-success-content').classList.remove('hidden');
-
-    setTimeout(closeModal, 2800);
+      btn.disabled = false;
+      btn.textContent = 'Submit →';
+      document.getElementById('modal-form-content').classList.add('hidden');
+      document.getElementById('modal-success-content').classList.remove('hidden');
+      setTimeout(closeModal, 2800);
+    }, 1200);
   } catch(e) {
     btn.disabled = false;
     btn.textContent = 'Submit →';
