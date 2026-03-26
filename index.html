@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MDes Admissions 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --serif: 'DM Serif Display', Georgia, serif;
+      --mono:  'DM Mono', monospace;
+      --sans:  'DM Sans', sans-serif;
+    }
+
+    /* ── DARK (default) ── */
+    :root, html.dark {
+      --bg:         #0f0f0f;
+      --surface:    #1a1a1a;
+      --surface2:   #222222;
+      --border:     #2e2e2e;
+      --text:       #e8e4dc;
+      --muted:      #6a6560;
+      --ink:        #f0ece4;
+
+      --open-bg:       #0d2118;
+      --open-text:     #4cda82;
+      --open-border:   #2a7a50;
+
+      --soon-bg:       #1f1800;
+      --soon-text:     #f0c040;
+      --soon-border:   #7a6000;
+
+      --results-bg:    #0a1628;
+      --results-text:  #6aabff;
+      --results-border:#1e4080;
+
+      --closed-bg:     #1a1a1a;
+      --closed-text:   #555;
+      --closed-border: #333;
+
+      --na-bg:         #161616;
+      --na-text:       #444;
+      --na-border:     #2a2a2a;
+    }
+
+    /* ── LIGHT ── */
+    html.light {
+      --bg:         #f5f2eb;
+      --surface:    #ffffff;
+      --surface2:   #f0ece2;
+      --border:     #e0d9cc;
+      --text:       #1a1814;
+      --muted:      #8a8070;
+      --ink:        #2c2820;
+
+      --open-bg:       #e8f5ee;
+      --open-text:     #1a7a40;
+      --open-border:   #4caf7d;
+
+      --soon-bg:       #fef9e6;
+      --soon-text:     #a07800;
+      --soon-border:   #f0c040;
+
+      --results-bg:    #e8f0fb;
+      --results-text:  #1a4fa0;
+      --results-border:#5b8def;
+
+      --closed-bg:     #ebebeb;
+      --closed-text:   #555;
+      --closed-border: #bbb;
+
+      --na-bg:         #f5f5f5;
+      --na-text:       #aaa;
+      --na-border:     #ddd;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* theme toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 100;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .theme-toggle:hover { border-color: var(--text); color: var(--text); }
+
+    .theme-toggle .toggle-track {
+      width: 28px; height: 16px;
+      border-radius: 99px;
+      background: var(--border);
+      position: relative;
+      transition: background 0.25s;
+      flex-shrink: 0;
+    }
+
+    html.light .theme-toggle .toggle-track { background: var(--ink); }
+
+    .theme-toggle .toggle-thumb {
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: transform 0.25s, background 0.25s;
+    }
+
+    html.light .theme-toggle .toggle-thumb {
+      transform: translateX(12px);
+      background: #f5f2eb;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,0,0,0.012) 28px, rgba(0,0,0,0.012) 29px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 28px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* FOOTER */
+    footer { margin-top: 60px; }
+
+    .footer-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+      margin-bottom: 20px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+    }
+
+    .footer-spacer { flex: 1; max-width: 160px; }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .footer-link {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+
+    .footer-link svg { width: 13px; height: 13px; }
+    .footer-link:hover { color: var(--text); }
+
+    /* HEADER */
+    header { margin-bottom: 48px; }
+
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.05;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    h1 em { font-style: italic; color: var(--open-text); }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 8px;
+      font-weight: 300;
+    }
+
+    /* summary pills */
+    .summary { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px; }
+
+    .s-pill {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 5px 13px;
+      border-radius: 99px;
+      border: 1px solid;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .s-pill .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .s-pill.open    { background:var(--open-bg);    color:var(--open-text);    border-color:var(--open-border); }
+    .s-pill.soon    { background:var(--soon-bg);    color:var(--soon-text);    border-color:var(--soon-border); }
+    .s-pill.results { background:var(--results-bg); color:var(--results-text); border-color:var(--results-border); }
+    .s-pill.closed  { background:var(--closed-bg);  color:var(--closed-text);  border-color:var(--closed-border); }
+    .s-pill.na      { background:var(--na-bg);      color:var(--na-text);      border-color:var(--na-border); }
+    .s-pill.open .dot    { background:var(--open-border);    box-shadow:0 0 5px var(--open-border); animation:pulse 2s infinite; }
+    .s-pill.soon .dot    { background:var(--soon-border); }
+    .s-pill.results .dot { background:var(--results-border); }
+    .s-pill.closed .dot  { background:var(--closed-border); }
+    .s-pill.na .dot      { background:var(--na-border); }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 60%, transparent);
+    }
+
+    /* CONTROLS */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      margin-top: 24px;
+    }
+
+    .left-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      padding: 8px 16px;
+      cursor: pointer;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s;
+    }
+
+    .toggle-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .toggle-btn + .toggle-btn { border-left: 1px solid var(--border); }
+    .toggle-btn.active { background: var(--text); color: var(--bg); }
+
+    .filter-select {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 8px 28px 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a8070'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .updated-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    /* BADGE */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+
+    .badge::before { content:''; width:5px; height:5px; border-radius:50%; }
+    .badge.open    { background:var(--open-bg);    color:var(--open-text);    border-color:var(--open-border); }
+    .badge.soon    { background:var(--soon-bg);    color:var(--soon-text);    border-color:var(--soon-border); }
+    .badge.results { background:var(--results-bg); color:var(--results-text); border-color:var(--results-border); }
+    .badge.closed  { background:var(--closed-bg);  color:var(--closed-text);  border-color:var(--closed-border); }
+    .badge.na      { background:var(--na-bg);      color:var(--na-text);      border-color:var(--na-border); }
+    .badge.open::before    { background:var(--open-border);    box-shadow:0 0 4px var(--open-border); animation:pulse 2s infinite; }
+    .badge.soon::before    { background:var(--soon-border); }
+    .badge.results::before { background:var(--results-border); }
+    .badge.closed::before  { background:var(--closed-border); }
+    .badge.na::before      { background:var(--na-border); }
+
+    /* CARD VIEW */
+    #card-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeUp 0.3s ease both;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 12px 12px 0 0;
+    }
+    .card.open::before    { background: var(--open-border); }
+    .card.soon::before    { background: var(--soon-border); }
+    .card.results::before { background: var(--results-border); }
+    .card.closed::before  { background: var(--closed-border); }
+    .card.na::before      { background: var(--na-border); }
+    .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); transform: translateY(-2px); }
+
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .card-college { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); line-height: 1.2; }
+    .card-dept    { font-size: 0.76rem; color: var(--muted); font-weight: 300; margin-top: 3px; }
+
+    .card-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .date-item label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .date-item span { font-family: var(--mono); font-size: 0.75rem; color: var(--text); }
+    .date-item span.empty { color: var(--na-border); }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      gap: 10px;
+    }
+
+    .fee-tag { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .fee-tag strong { color: var(--text); }
+
+    .link-btns { display: flex; gap: 6px; }
+
+    .link-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .link-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .link-btn svg { width: 10px; height: 10px; }
+    .link-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+    /* inline tooltip for disabled links — sits inside card, no clipping issue */
+    .link-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .link-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      padding: 5px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 10;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .link-wrap:hover .link-tooltip { opacity: 1; }
+
+    /* TABLE VIEW */
+    #table-view {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .table-scroll { overflow-x: auto; }
+
+    table { width: 100%; border-collapse: collapse; animation: fadeUp 0.3s ease both; }
+
+    thead { background: var(--surface2); border-bottom: 1px solid var(--border); }
+
+    th {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      font-size: 0.85rem;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr { transition: background 0.12s; }
+    tbody tr:hover { background: var(--surface2); }
+
+    .td-num     { font-family:var(--mono); font-size:0.72rem; color:var(--na-border); }
+    .td-college { font-family:var(--serif); font-size:0.95rem; color:var(--ink); white-space:nowrap; }
+    .td-dept    { font-size:0.78rem; color:var(--muted); max-width:220px; }
+    .td-date    { font-family:var(--mono); font-size:0.75rem; color:var(--muted); white-space:nowrap; }
+    .td-fee     { font-family:var(--mono); font-size:0.78rem; white-space:nowrap; }
+
+    /* loading / error */
+    .state-msg {
+      text-align: center;
+      padding: 80px 24px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .spinner {
+      width: 26px; height: 26px;
+      border: 2px solid var(--border);
+      border-top-color: var(--open-border);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 14px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 24px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* no details state in card */
+    .no-details-msg {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 10px 0 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .no-details-msg span {
+      font-size: 0.65rem;
+      color: var(--na-text);
+    }
+
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    .hidden { display: none !important; }
+
+    /* ── TOOLTIP (generic) ── */
+    [data-tip] { position: relative; }
+    [data-tip]::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: pre;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 999;
+      text-align: center;
+      line-height: 1.6;
+      min-width: 180px;
+    }
+    /* only show tooltip if data-tip has actual content */
+    [data-tip]:not([data-tip=""]):hover::after { opacity: 1; }
+
+    /* ── MAINTAINER BADGE ── */
+    .maintainer-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-bottom: 1px dashed var(--muted);
+      padding-bottom: 1px;
+      cursor: help;
+      position: relative;
+    }
+
+    /* popover appended to body by JS */
+    .maintainer-popover {
+      position: fixed;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      width: 260px;
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.6;
+      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.18s, transform 0.18s;
+    }
+
+    .maintainer-popover.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .maintainer-popover p { margin-bottom: 8px; font-family: var(--sans); }
+    .maintainer-popover p:last-child { margin-bottom: 0; color: var(--muted); font-size: 0.72rem; }
+
+    /* ── REPORT BUTTON (sticky) ── */
+    .report-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      background: var(--soon-bg);
+      border: 1px solid var(--soon-border);
+      border-radius: 99px;
+      padding: 11px 22px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--soon-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      font-weight: 500;
+    }
+
+    .report-fab:hover {
+      background: var(--soon-border);
+      color: #000;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      transform: translateY(-1px);
+    }
+    .report-fab svg { width: 14px; height: 14px; }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── MODAL BOX ── */
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 460px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(12px);
+      transition: transform 0.2s;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--ink);
+    }
+
+    .modal-subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .modal-close {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .modal-close:hover { border-color: var(--text); color: var(--text); }
+
+    .modal-section { margin-bottom: 18px; }
+
+    .modal-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* issue type toggles */
+    .issue-toggles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .issue-toggle {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 5px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .issue-toggle.selected {
+      background: var(--soon-bg);
+      border-color: var(--soon-border);
+      color: var(--soon-text);
+    }
+
+    /* modal select & textarea */
+    .modal-select, .modal-textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 10px 12px;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    .modal-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236a6560'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
+    }
+
+    .modal-textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.5;
+    }
+
+    .modal-select:focus, .modal-textarea:focus {
+      outline: none;
+      border-color: var(--soon-border);
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-submit {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 9px 20px;
+      border-radius: 8px;
+      border: none;
+      background: var(--soon-border);
+      color: #000;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      font-weight: 500;
+    }
+
+    .btn-submit:hover { opacity: 0.85; }
+    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-cancel {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 9px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-cancel:hover { border-color: var(--text); color: var(--text); }
+
+    /* success state */
+    .modal-success {
+      text-align: center;
+      padding: 20px 0;
+      font-family: var(--mono);
+    }
+
+    .modal-success .success-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .modal-success p { color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 32px 16px 60px; }
+      h1 { font-size: 2rem; }
+      .card-dates { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+    <span id="theme-label">☀ Light</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+
+  <header>
+    <div class="header-top">
+      <div class="title-block">
+        <p class="eyebrow">India · Design Admissions</p>
+      <h1>MDes <span style="color:var(--open-text)">2026</span></h1>
+        <p class="subtitle">IIT & IIITDM programme tracker —
+          <span class="maintainer-tag" id="maintainer-tag">updated by maintainer</span>
+        </p>
+      </div>
+        <div class="summary" id="summary"></div>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <div class="controls">
+    <div class="left-controls">
+      <div class="toggle-group">
+        <button class="toggle-btn active" id="btn-card" onclick="setView('card')">
+          <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+          Cards
+        </button>
+        <button class="toggle-btn" id="btn-table" onclick="setView('table')">
+          <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="14" height="3" rx="1"/><rect x="1" y="6" width="14" height="3" rx="1"/><rect x="1" y="11" width="14" height="3" rx="1"/></svg>
+          Table
+        </button>
+      </div>
+
+      <select class="filter-select" id="filter-status" onchange="render()">
+        <option value="all">All Statuses</option>
+        <option value="open">Open</option>
+        <option value="soon">Opening Soon</option>
+        <option value="results">Results Out</option>
+        <option value="closed">Closed</option>
+        <option value="na">NA</option>
+      </select>
+    </div>
+
+    <span class="updated-tag" id="last-updated">—</span>
+  </div>
+
+  <div id="card-view"></div>
+  <div id="table-view" class="hidden"></div>
+
+  <footer>
+    <div class="footer-divider"></div>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2026 Bazim · All rights reserved</span>
+      <a class="footer-link" href="https://www.instagram.com/bazim.nubail/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        Connect with me
+      </a>
+      <span class="footer-spacer"></span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ── REPORT FAB ── -->
+<button class="report-fab" onclick="openModal()">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+    <circle cx="8" cy="8" r="7"/>
+    <path d="M8 5v4M8 11v.5"/>
+  </svg>
+  Report a Bug
+</button>
+
+<!-- ── REPORT MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div id="modal-form-content">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Report an Issue</div>
+          <div class="modal-subtitle">Help keep this tracker accurate for everyone.</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕ Close</button>
+      </div>
+
+      <div class="modal-section">
+        <span class="modal-label">What's the issue?</span>
+        <div class="issue-toggles" id="issue-toggles">
+          <button class="issue-toggle" onclick="toggleIssue(this)">Wrong details</button>
+          <button class="issue-toggle" onclick="toggleIssue(this)">Missing link / Portal</button>
+          <button class="issue-toggle" onclick="toggleIssue(this)">New info available</button>
+          <button class="issue-toggle" onclick="toggleIssue(this)">Portal is now open</button>
+          <button class="issue-toggle" onclick="toggleIssue(this)">Other</button>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <span class="modal-label">Institute (optional)</span>
+        <select class="modal-select" id="report-institute">
+          <option value="">— Select institute —</option>
+        </select>
+      </div>
+
+      <div class="modal-section">
+        <span class="modal-label">Details</span>
+        <textarea class="modal-textarea" id="report-details" placeholder="Describe what's wrong or what's missing…"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-submit" id="btn-submit" onclick="submitReport()">Submit →</button>
+      </div>
+    </div>
+
+    <div id="modal-success-content" class="modal-success hidden">
+      <div class="success-icon">✅</div>
+      <strong>Thanks for the report!</strong>
+      <p>The maintainer will review it and update the tracker shortly.</p>
+    </div>
+  </div>
+</div>
+<script>
+// ─────────────────────────────────────────────────────────────
+//  CONFIG — swap SHEET_CSV_URL with your Google Sheets link
+//  when ready. Leave as 'USE_DUMMY' for now.
+// ─────────────────────────────────────────────────────────────
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFhY9joIbSISdT5ws6fjV3nOlTeWBUhgOOYe49WTvjjdVtODe4j01sPQfhX2KhrolinrVug2r6TH8k/pub?gid=1650557532&single=true&output=csv';
+
+// ── DUMMY DATA ────────────────────────────────────────────────
+const DUMMY = [
+  { college:'IISc Bangalore',      dept:'Centre for Product Design and Manufacturing', status:'open',    lastDate:'23-05-2026', lastDateFine:'30-05-2026', fee:'800', site:'https://iisc.ac.in', portal:'https://iisc.ac.in/admissions' },
+  { college:'IIT Bombay',          dept:'IDC School of Design',                        status:'open',    lastDate:'30-03-2026', lastDateFine:'',           fee:'600', site:'https://iitb.ac.in', portal:'https://iitb.ac.in/admissions' },
+  { college:'IIT Delhi',           dept:'Department of Design',                        status:'open',    lastDate:'06-04-2026', lastDateFine:'13-04-2026', fee:'200', site:'https://iitd.ac.in', portal:'https://iitd.ac.in' },
+  { college:'IIT Gandhinagar',     dept:'Design Discipline',                           status:'soon',    lastDate:'10-04-2026', lastDateFine:'',           fee:'',    site:'https://iitgn.ac.in', portal:'' },
+  { college:'IIT Guwahati',        dept:'Department of Design',                        status:'soon',    lastDate:'17-04-2026', lastDateFine:'',           fee:'',    site:'https://iitg.ac.in', portal:'' },
+  { college:'IIT Hyderabad',       dept:'Department of Design',                        status:'results', lastDate:'',           lastDateFine:'',           fee:'',    site:'https://iith.ac.in', portal:'https://iith.ac.in/admissions' },
+  { college:'IIT Jodhpur',         dept:'Department of Design',                        status:'closed',  lastDate:'01-03-2026', lastDateFine:'',           fee:'500', site:'https://iitj.ac.in', portal:'' },
+  { college:'IIT Kanpur',          dept:'Design Programme',                            status:'closed',  lastDate:'15-02-2026', lastDateFine:'',           fee:'',    site:'https://iitk.ac.in', portal:'' },
+  { college:'IIT Roorkee',         dept:'Department of Design',                        status:'na',      lastDate:'',           lastDateFine:'',           fee:'500', site:'https://iitr.ac.in', portal:'' },
+  { college:'IIITDM Jabalpur',     dept:'Design Discipline',                           status:'na',      lastDate:'',           lastDateFine:'',           fee:'',    site:'https://iiitdmj.ac.in', portal:'' },
+  { college:'IIITDM Kancheepuram', dept:'School of Interdisciplinary Design',          status:'na',      lastDate:'',           lastDateFine:'',           fee:'',    site:'https://iiitdm.ac.in', portal:'' },
+];
+
+// ── STATUS CONFIG ─────────────────────────────────────────────
+const STATUS_MAP = {
+  open:    { label:'Open',         cls:'open',    priority:1 },
+  soon:    { label:'Opening Soon', cls:'soon',    priority:2 },
+  results: { label:'Results Out',  cls:'results', priority:3 },
+  closed:  { label:'Closed',       cls:'closed',  priority:4 },
+  na:      { label:'NA',           cls:'na',      priority:5 },
+};
+
+function getStatus(raw) {
+  const key = (raw||'').toLowerCase().replace(/\s+/g,'');
+  if (key==='open')                              return STATUS_MAP.open;
+  if (key==='openingsoon'||key==='soon')         return STATUS_MAP.soon;
+  if (key==='resultsout'||key==='results')       return STATUS_MAP.results;
+  if (key==='closed')                            return STATUS_MAP.closed;
+  return STATUS_MAP.na;
+}
+
+// ── STATE ─────────────────────────────────────────────────────
+let allData = [];
+let currentView = 'card';
+
+// ── INIT ──────────────────────────────────────────────────────
+async function init() {
+  if (SHEET_CSV_URL === 'USE_DUMMY') {
+    allData = DUMMY;
+    document.getElementById('last-updated').textContent = '⚠ Dummy data — Google Sheets not connected yet';
+  } else {
+    showLoading();
+    try {
+      const res  = await fetch(SHEET_CSV_URL + '&cachebust=' + Date.now());
+      const text = await res.text();
+      allData    = parseCSV(text);
+      document.getElementById('last-updated').textContent = 'Fetched at ' + new Date().toLocaleTimeString();
+    } catch(e) {
+      showError(); return;
+    }
+  }
+  buildSummary();
+  render();
+}
+
+// ── CSV PARSER ────────────────────────────────────────────────
+function parseCSV(text) {
+  const lines   = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/[\s"]/g,'_'));
+  return lines.slice(1).map(line => {
+    const cols = line.split(',');
+    const obj  = {};
+    headers.forEach((h,i) => obj[h] = (cols[i]||'').trim().replace(/^"|"$/g,''));
+    return {
+      college:      obj['college']||'',
+      dept:         obj['design_department']||obj['department']||'',
+      status:       obj['portal']||obj['portal_status']||obj['status']||'na',
+      lastDate:     obj['last_date']||'',
+      lastDateFine: obj['last_date_with_fine']||obj['last_date_fine']||'',
+      fee:          obj['fee']||'',
+      site:         obj['site_link']||'',
+      portal:       obj['portal_link']||'',
+    };
+  });
+}
+
+// ── SUMMARY ───────────────────────────────────────────────────
+function buildSummary() {
+  const counts = { open:0, soon:0, results:0, closed:0, na:0 };
+  allData.forEach(d => {
+    const s = getStatus(d.status);
+    const k = Object.keys(STATUS_MAP).find(k => STATUS_MAP[k]===s)||'na';
+    counts[k]++;
+  });
+  document.getElementById('summary').innerHTML =
+    Object.entries(counts).map(([k,v]) =>
+      `<div class="s-pill ${k}"><span class="dot"></span>${STATUS_MAP[k].label}: ${v}</div>`
+    ).join('');
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function render() {
+  const filter = document.getElementById('filter-status').value;
+  const data = allData
+    .map(d => ({ ...d, _s: getStatus(d.status) }))
+    .filter(d => filter==='all' || d._s.cls===filter)
+    .sort((a,b) => a._s.priority - b._s.priority);
+
+  if (currentView==='card') renderCards(data);
+  else renderTable(data);
+}
+
+function d(val) { return val || '—'; }
+
+function hasNoDetails(row) {
+  return !row.lastDate && !row.lastDateFine && !row.fee && !row.site && !row.portal;
+}
+
+function renderCards(data) {
+  const el = document.getElementById('card-view');
+  if (!data.length) { el.innerHTML='<div class="empty-state">No entries match this filter.</div>'; return; }
+  el.innerHTML = data.map((row,i) => `
+    <div class="card ${row._s.cls}" style="animation-delay:${i*0.04}s">
+      <div class="card-header">
+        <div>
+          <div class="card-college">${row.college}</div>
+          <div class="card-dept">${row.dept}</div>
+        </div>
+        <span class="badge ${row._s.cls}">${row._s.label}</span>
+      </div>
+      ${hasNoDetails(row) ? `
+        <div class="no-details-msg">
+          No details found yet
+          <span>Have updates? Hit the Report button ↘</span>
+        </div>
+      ` : `
+        <div class="card-dates">
+          <div class="date-item"><label>Last Date</label><span class="${row.lastDate?'':'empty'}">${d(row.lastDate)}</span></div>
+          ${row.lastDateFine ? `<div class="date-item"><label>Last Date (with Fine)</label><span>${row.lastDateFine}</span></div>` : ''}
+        </div>
+      `}
+      <div class="card-footer">
+        <div class="fee-tag">${row.fee ? 'Fee <strong>₹'+row.fee+'</strong>' : '<span style="opacity:.35">Fee —</span>'}</div>
+        <div class="link-btns">
+          <div class="link-wrap">
+            <a class="link-btn ${row.site?'':'disabled'}" ${row.site?`href="${row.site}" target="_blank" rel="noopener"`:'aria-disabled="true"'}>
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M6 1c-1.5 1.5-2 3-2 5s.5 3.5 2 5M6 1c1.5 1.5 2 3 2 5s-.5 3.5-2 5M1 6h10"/></svg>
+              Site
+            </a>
+            ${!row.site ? `<div class="link-tooltip">Use Report to add</div>` : ''}
+          </div>
+          <div class="link-wrap">
+            <a class="link-btn ${row.portal?'':'disabled'}" ${row.portal?`href="${row.portal}" target="_blank" rel="noopener"`:'aria-disabled="true"'}>
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2h3v3M10 2L6 6M5 3H2v7h7V7"/></svg>
+              Portal
+            </a>
+            ${!row.portal ? `<div class="link-tooltip">Use Report to add</div>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTable(data) {
+  const el = document.getElementById('table-view');
+  if (!data.length) { el.innerHTML='<div class="empty-state">No entries match this filter.</div>'; return; }
+  el.innerHTML = `
+    <div class="table-scroll"><table>
+      <thead><tr>
+        <th>#</th><th>College</th><th>Department</th><th>Status</th>
+        <th>Last Date</th><th>Last Date (with Fine)</th>
+        <th>Fee</th><th>Links</th>
+      </tr></thead>
+      <tbody>
+        ${data.map((row,i) => `
+          <tr>
+            <td class="td-num">${i+1}</td>
+            <td class="td-college">${row.college}</td>
+            <td class="td-dept">${row.dept}</td>
+            <td><span class="badge ${row._s.cls}">${row._s.label}</span></td>
+            <td class="td-date">${d(row.lastDate)}</td>
+            <td class="td-date">${d(row.lastDateFine)}</td>
+            <td class="td-fee">${row.fee ? '₹'+row.fee : '—'}</td>
+            <td>
+              <div class="link-btns">
+                <a class="link-btn ${row.site?'':'disabled'}"   href="${row.site||'#'}"   target="_blank" rel="noopener">Site</a>
+                <a class="link-btn ${row.portal?'':'disabled'}" href="${row.portal||'#'}" target="_blank" rel="noopener">Portal</a>
+              </div>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table></div>
+  `;
+}
+
+// ── VIEW TOGGLE ───────────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.getElementById('card-view').classList.toggle('hidden', v!=='card');
+  document.getElementById('table-view').classList.toggle('hidden', v!=='table');
+  document.getElementById('btn-card').classList.toggle('active', v==='card');
+  document.getElementById('btn-table').classList.toggle('active', v==='table');
+  render();
+}
+
+function showLoading() {
+  document.getElementById('card-view').innerHTML = '<div class="state-msg"><div class="spinner"></div>Fetching from Google Sheets…</div>';
+}
+
+function showError() {
+  document.getElementById('card-view').innerHTML = '<div class="state-msg">⚠ Could not load data. Check your Sheet URL or network.</div>';
+}
+
+// ── THEME TOGGLE ──────────────────────────────────────────────
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.classList.contains('dark');
+  html.classList.toggle('dark', !isDark);
+  html.classList.toggle('light', isDark);
+  document.getElementById('theme-label').textContent = isDark ? '🌙 Dark' : '☀ Light';
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+// ⚙ CONFIG: Replace with your Google Form action URL and entry IDs
+// Form action URL looks like: https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse
+const FORM_ACTION = 'YOUR_GOOGLE_FORM_ACTION_URL';
+const FIELD_ISSUE    = 'entry.XXXXXXXXX'; // Issue type field
+const FIELD_INSTITUTE= 'entry.XXXXXXXXX'; // Institute field
+const FIELD_DETAILS  = 'entry.XXXXXXXXX'; // Details field
+
+function openModal() {
+  // Populate institute dropdown from loaded data
+  const sel = document.getElementById('report-institute');
+  sel.innerHTML = '<option value="">— Select institute —</option>';
+  allData.forEach(row => {
+    const opt = document.createElement('option');
+    opt.value = row.college;
+    opt.textContent = row.college;
+    sel.appendChild(opt);
+  });
+
+  // Reset form
+  document.querySelectorAll('.issue-toggle').forEach(t => t.classList.remove('selected'));
+  document.getElementById('report-details').value = '';
+  document.getElementById('modal-form-content').classList.remove('hidden');
+  document.getElementById('modal-success-content').classList.add('hidden');
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function toggleIssue(btn) {
+  btn.classList.toggle('selected');
+}
+
+async function submitReport() {
+  const issues = [...document.querySelectorAll('.issue-toggle.selected')].map(t => t.textContent);
+  const institute = document.getElementById('report-institute').value;
+  const details   = document.getElementById('report-details').value.trim();
+
+  if (!issues.length && !details) {
+    document.getElementById('report-details').focus();
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const issueText = issues.length ? issues.join(', ') : 'Not specified';
+  const instText  = institute || 'Not specified';
+
+  try {
+    // Silent form post via hidden iframe trick (no page reload, no CORS issue)
+    const iframe = document.createElement('iframe');
+    iframe.name = 'hidden-submit';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.action = FORM_ACTION;
+    form.method = 'POST';
+    form.target = 'hidden-submit';
+
+    const fields = {
+      [FIELD_ISSUE]:     issueText,
+      [FIELD_INSTITUTE]: instText,
+      [FIELD_DETAILS]:   details,
+    };
+
+    Object.entries(fields).forEach(([name, value]) => {
+      const input = document.createElement('input');
+      input.type  = 'hidden';
+      input.name  = name;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Clean up after a moment
+    setTimeout(() => {
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+    }, 3000);
+
+    // Show success
+    document.getElementById('modal-form-content').classList.add('hidden');
+    document.getElementById('modal-success-content').classList.remove('hidden');
+
+    setTimeout(closeModal, 2800);
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Submit →';
+    alert('Something went wrong. Please try again.');
+  }
+}
+
+// ── MAINTAINER POPOVER ────────────────────────────────────────
+(function() {
+  const popover = document.createElement('div');
+  popover.className = 'maintainer-popover';
+  popover.innerHTML = `
+    <p>This tracker is <strong>manually maintained</strong> by a student. Data may be slightly delayed or incomplete.</p>
+    <p>Found something wrong or missing? Use the <strong>Report a Bug</strong> button at the bottom right — it takes 10 seconds.</p>
+  `;
+  document.body.appendChild(popover);
+
+  const tag = document.getElementById('maintainer-tag');
+
+  tag.addEventListener('mouseenter', () => {
+    const rect = tag.getBoundingClientRect();
+    popover.style.top  = (rect.bottom + 10) + 'px';
+    popover.style.left = rect.left + 'px';
+    popover.classList.add('visible');
+  });
+
+  tag.addEventListener('mouseleave', () => {
+    popover.classList.remove('visible');
+  });
+})();
+
+init();
+</script>
+</body>
+</html>
